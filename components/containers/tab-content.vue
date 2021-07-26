@@ -3,13 +3,15 @@
     <div style="height: 12px;" :style="{background}"></div>
 		<div class="tab-content_header">
       <div class="header-wrapper">
-        <div class="header-wrapper_tab" v-for="(el,i) in this.tabs" :key="i" @click="activeTab=el.id">
+        <div class="header-wrapper_tab" v-for="(el,i) in this.tabs" :key="i" @click="onTabClick(el)">
           <div style="width: 8px;" :style="{background}"/>
+		  <!-- Normal tab -->
           <div v-if="el.id!==activeTab" class="additive" :style="{background}">
-            <div class="tab_content" v-html="el.id+': '+el.data"/>
+            <div class="tab_content" v-html="el.data"/>
           </div>
+		  <!-- Active tab -->
           <div v-if="el.id===activeTab" class="subtractive">
-            <div class="tab_content" v-html="el.id+': '+el.data"/>
+            <div class="tab_content" v-html="el.data"/>
             <div class="tab_graphic">
               <div class="tab_graphic_center">
                 <svg :width="12" height="28">
@@ -59,11 +61,11 @@ export default {
 	data: function () {
 		return {
 			tabs: [
-				{id:1,data:'1'},
-				{id:2,data:'2'},
-				{id:3,data:'Katya'},
-				{id:4,data:'4'},
-				{id:5,data:'5'}
+				{id:4,data:'Home'},
+				{id:1,data:'Devices'},
+				{id:2,data:'Commands'},
+				{id:3,data:'Options'},
+				{id:5,data:'Stats'}
 			],
 			activeTab: 3,
 			active_tab_width: 64
@@ -78,14 +80,14 @@ export default {
 	},
 	methods: {
 		updated() {
-		  console.log('WWWWWWWWWWWWWWW')
+			console.log('WWWWWWWWWWWWWWW')
 		},
 		mounted() {
-      console.log('UPDATED!!!!')
+      		console.log('UPDATED!!!!')
 		},
-    onResize(e) {
-		  console.log('resize',e)
-    }
+		onTabClick(tab) {
+			this.activeTab=tab.id;
+		}
 	}
 }
 </script>
@@ -102,59 +104,56 @@ export default {
 		position: absolute;
 		z-index: 1;
 		display: flex;
-    pointer-events: none;
-    .header-wrapper {
-      display: flex;
-      &_tab {
-        display: flex;
-        .additive {
-          position: relative;
-          font-variant: small-caps;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          cursor: pointer;
-          pointer-events: all;
-          .tab_content {
-            background: #111111;
-          }
-        }
-        .subtractive {
-          position: relative;
-          color: #d4cfd5;
-          font-variant: small-caps;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          cursor: pointer;
-          svg {
+		pointer-events: none;
+		.header-wrapper {
+			display: flex;
+			&_tab {
+				display: flex;
+				.additive {
+					position: relative;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					cursor: pointer;
+					pointer-events: all;
+					.tab_content {
+						background: #111111;
+					}
+				}
+				.subtractive {
+					position: relative;
+					color: #d4cfd5;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					cursor: pointer;
+					svg {
 
-          }
-        }
-        .tab_content {
-          padding: 6px;
-          position: relative;
-          color: #d4cfd5;
-          border: solid #070604 1px;
-          border-bottom: 0;
-          border-radius: 6px 6px 0 0;
-        }
-        .tab_graphic {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          &_center {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-between;
-          }
-        }
-      }
-    }
-
+					}
+				}
+				.tab_content {
+					padding: 6px;
+					position: relative;
+					color: #d4cfd5;
+					border: solid #070604 1px;
+					border-bottom: 0;
+					border-radius: 6px 6px 0 0;
+				}
+				.tab_graphic {
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					&_center {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						justify-content: space-between;
+					}
+				}
+			}
+   		}
 	}
 	&_body {
 		position: relative;
