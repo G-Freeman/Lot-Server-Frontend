@@ -144,7 +144,6 @@ export default Vue.extend({
 				text-align: center;
 				padding: 12px;
 				font-size: 24px;
-				font-family: monospace;
 				user-select: none;
 				border: solid #876052 1px;
 				border-radius: 4px;
@@ -170,7 +169,6 @@ export default Vue.extend({
 				text-align: center;
 				padding: 4px;
 				font-size: 12px;
-				font-family: monospace;
 				user-select: none;
 				border: solid #876052 1px;
 				border-radius: 4px;
