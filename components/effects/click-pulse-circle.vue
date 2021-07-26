@@ -1,5 +1,5 @@
 <template>
-  <div class="effect-region" @click="onclick" @mousedown="onclick">
+  <div class="effect-region" @mousedown="onclick">
     <div :id="id+'X'+obj.id" :key="obj.id" v-for="obj in objects" class="pulse-circle">
       <div :id="id+'X'+obj.id" class="circle pulse"/>
     </div>
