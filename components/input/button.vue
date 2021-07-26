@@ -1,7 +1,7 @@
 <template>
-	<div class="button" @mousedown="onclick">
-		<slot/>
+	<div class="button" @mousedown="$emit('click')">
 		<effectPulseCircle/>
+		<slot/>
 	</div>
 </template>
 
@@ -10,37 +10,6 @@ import effectPulseCircle from '@/components/effects/click-pulse-circle'
 export default {
 	name: 'PreloaderPulseCircle',
 	components: { effectPulseCircle },
-	props: {
-		id:         { default: 'effect-pulse-circle', type: String },
-		duration:   { default: 1000, type:Number },
-		size:       { default: '1200px', type:String }
-	},
-	data () {
-		return {
-			objects: [],
-		}
-	},
-	methods: {
-		onclick (e) {
-			const rnd = Math.random();
-			const newObj = { id: 'effect-'+rnd };
-			this.objects.push(newObj);
-			this.$nextTick(()=>{
-				const effectWrapper = document.getElementById(this.id+'X'+'effect-'+rnd)
-				if(effectWrapper) {
-					effectWrapper.style.width  = this.size;
-					effectWrapper.style.height = this.size;
-					effectWrapper.style.left = (e.layerX - effectWrapper.offsetWidth / 2) + 'px'
-					effectWrapper.style.top  = (e.layerY - effectWrapper.offsetHeight / 2) + 'px'
-					setTimeout(() => {
-						const index = this.objects.indexOf(newObj)
-						this.objects.splice(index, 1);
-					}, this.duration)
-				}
-			})
-
-		}
-	}
 }
 </script>
 

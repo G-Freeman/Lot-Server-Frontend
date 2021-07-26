@@ -7,7 +7,7 @@
 		  style="min-width: 140px"
 		  @click="wsToggle"
 		>
-		  12345
+			{{ ws_init_response.status?'Disconnect':'Connect' }}
 		</VButton>
         <div class="flex-vertical">
           <div class="text-info" v-text="'Connected: '+ws_init_response.status" />
