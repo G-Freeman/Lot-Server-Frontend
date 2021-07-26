@@ -58,13 +58,13 @@ export default {
 	components: { effectPulseCircle },
 	data: function () {
 		return {
-		  tabs: [
-		    {id:1,data:'1'},
-        {id:2,data:'2'},
-        {id:3,data:'Katya'},
-        {id:4,data:'4'},
-        {id:5,data:'5'}
-      ],
+			tabs: [
+				{id:1,data:'1'},
+				{id:2,data:'2'},
+				{id:3,data:'Katya'},
+				{id:4,data:'4'},
+				{id:5,data:'5'}
+			],
 			activeTab: 3,
 			active_tab_width: 64
 		}
@@ -116,7 +116,7 @@ export default {
           cursor: pointer;
           pointer-events: all;
           .tab_content {
-            background: #ff8b02;
+            background: #111111;
           }
         }
         .subtractive {
