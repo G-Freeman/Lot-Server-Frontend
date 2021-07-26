@@ -1,14 +1,15 @@
 <template>
-  <div class="effect-region" @mousedown="onclick">
-    <div :id="id+'X'+obj.id" :key="obj.id" v-for="obj in objects" class="pulse-circle">
-      <div :id="id+'X'+obj.id" class="circle pulse"/>
-    </div>
-  </div>
+	<div class="button" @mousedown="onclick">
+		<slot/>
+		<effectPulseCircle/>
+	</div>
 </template>
 
 <script>
+import effectPulseCircle from '@/components/effects/click-pulse-circle'
 export default {
 	name: 'PreloaderPulseCircle',
+	components: { effectPulseCircle },
 	props: {
 		id:         { default: 'effect-pulse-circle', type: String },
 		duration:   { default: 1000, type:Number },
@@ -44,35 +45,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.effect-region {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
+.button {
+	position: relative;
+	height: min-content;
+	display: block;
+	color: #d4cfd5;
+	background: rgb(85,81,89);
+	background: linear-gradient(180deg, rgb(85, 81, 89) 0%, rgba(44,49,59,1) 100%);
+	text-align: center;
+	padding: 12px;
+	font-size: 24px;
+	user-select: none;
+	border: solid #876052 1px;
+	border-radius: 4px;
 	overflow: hidden;
-	.pulse-circle {
-		position: absolute;
-		pointer-events: none;
-		> .pulse {
-			position: absolute;
-			height: inherit;
-			width: inherit;
-			background: rgba(0, 0, 0, 0.2);
-			border-radius: 50%;
-			opacity: 0;
-			animation: animate-circle 1s cubic-bezier(1,.25,.6,.8) 1;
-		}
+	cursor: pointer;
+	margin: 12px;
+	&.active {
+		background: linear-gradient(180deg, rgb(54, 64, 48) 0%, rgb(43, 47, 28) 100%);
 	}
-	@keyframes animate-circle {
-		from {
-			transform: scale(0);
-			opacity: 1;
-		}
-		to {
-			transform: scale(1);
-			opacity: 0;
-		}
+	&:hover {
+		filter: brightness(1.1);
+	}
+	&:active {
+		filter: brightness(.9);
 	}
 }
 </style>

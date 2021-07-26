@@ -2,14 +2,13 @@
   <section class="main">
     <div class="debug-window">
       <div class="websocket">
-        <div
-          class="button"
-          :class="{active:ws_init_response.status}"
-          style="min-width: 140px"
-          @click="wsToggle"
-        >
-          {{ ws_init_response.status?'Disconnect':'Connect' }}
-        </div>
+		<VButton
+		  :class="{active:ws_init_response.status}"
+		  style="min-width: 140px"
+		  @click="wsToggle"
+		>
+		  12345
+		</VButton>
         <div class="flex-vertical">
           <div class="text-info" v-text="'Connected: '+ws_init_response.status" />
           <div
@@ -29,11 +28,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import TabContent from '@/components/containers/tab-content'
+import Vue			from 'vue'
+import VButton		from '@/components/input/button'
+import TabContent	from '@/components/containers/tab-content'
 
 export default Vue.extend({
-	components: { TabContent },
+	components: { TabContent, VButton },
 	data () {
 		return {
 			ws: {} as WebSocket,
@@ -134,31 +134,6 @@ export default Vue.extend({
 				display: flex;
 				flex-direction: column;
 				margin: 12px;
-			}
-			.button {;
-				height: min-content;
-				display: block;
-				color: #d4cfd5;
-				background: rgb(85,81,89);
-				background: linear-gradient(180deg, rgb(85, 81, 89) 0%, rgba(44,49,59,1) 100%);
-				text-align: center;
-				padding: 12px;
-				font-size: 24px;
-				user-select: none;
-				border: solid #876052 1px;
-				border-radius: 4px;
-				overflow: hidden;
-				cursor: pointer;
-				margin: 12px;
-				&.active {
-					background: linear-gradient(180deg, rgb(54, 64, 48) 0%, rgb(43, 47, 28) 100%);
-				}
-				&:hover {
-					filter: brightness(1.1);
-				}
-				&:active {
-					filter: brightness(.9);
-				}
 			}
 			.small-btn {
 				height: min-content;
