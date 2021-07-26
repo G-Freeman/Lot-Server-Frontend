@@ -1,7 +1,7 @@
 <template>
   <div class="effect-region" @mousedown="onclick">
     <div :id="id+'X'+obj.id" :key="obj.id" v-for="obj in objects" class="pulse-circle">
-      <div :id="id+'X'+obj.id" class="circle pulse"/>
+      <div class="pulse"/>
     </div>
   </div>
 </template>
@@ -27,8 +27,10 @@ export default {
 			this.$nextTick(()=>{
 				const effectWrapper = document.getElementById(this.id+'X'+'effect-'+rnd)
 				if(effectWrapper) {
-					effectWrapper.style.width  = this.size;
-					effectWrapper.style.height = this.size;
+					if(this.size!=='1200px') {
+						effectWrapper.style.width  = this.size;
+						effectWrapper.style.height = this.size;
+					}
 					effectWrapper.style.left = (e.layerX - effectWrapper.offsetWidth / 2) + 'px'
 					effectWrapper.style.top  = (e.layerY - effectWrapper.offsetHeight / 2) + 'px'
 					setTimeout(() => {
@@ -52,9 +54,12 @@ export default {
 	left: 0;
 	overflow: hidden;
 	.pulse-circle {
+		width: 1200px;
+		height: 1200px;
 		position: absolute;
 		pointer-events: none;
 		> .pulse {
+			pointer-events: none;
 			position: absolute;
 			height: inherit;
 			width: inherit;
