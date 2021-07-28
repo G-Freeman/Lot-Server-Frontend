@@ -1,17 +1,18 @@
 <template>
 	<div class="tab-content">
-    <div style="height: 12px;" :style="{background}"></div>
-		<div class="tab-content_header">
+    <div :style="{background, height:header_height}"></div>
+	  <div class="tab-content_header">
       <div class="header-wrapper">
-        <div class="header-wrapper_tab" v-for="(el,i) in this.tabs" :key="i" @click="onTabClick(el)">
+
+        <div class="header-wrapper_tab" v-for="(tabName,i) in this.tabs" :key="i" @click="onTabClick(i)">
           <div style="width: 8px;" :style="{background}"/>
 		  <!-- Normal tab -->
-          <div v-if="el.id!==activeTab" class="additive" :style="{background}">
-            <div class="tab_content" v-html="el.data"/>
+          <div v-if="activeTab!==i" class="additive" :style="{background}">
+            <div class="tab_content" v-html="tabName"/>
           </div>
 		  <!-- Active tab -->
-          <div v-if="el.id===activeTab" class="subtractive">
-            <div class="tab_content" v-html="el.data"/>
+          <div v-if="activeTab===i" class="subtractive">
+            <div class="tab_content" v-html="tabName"/>
             <div class="tab_graphic">
               <div class="tab_graphic_center">
                 <svg :width="12" height="28">
@@ -43,10 +44,12 @@
 
       </div>
 
-		</div>
-		<div class="tab-content_body">
-			<effectPulseCircle />
-		</div>
+	  </div>
+	  <div class="tab-content_body" @click="()=>{}">
+		<component :is="component"></component>
+<!--		<slot id="tab-content_body" v-slot:default="slotProps"></slot>-->
+	  	<effectPulseCircle/>
+	  </div>
 
 	</div>
 </template>
@@ -54,41 +57,52 @@
 <script>
 
 import effectPulseCircle from '@/components/effects/click-pulse-circle'
+import VButton			 from '@/layouts/red.vue'
+// import VButton			 from '@/components/input/button.vue'
 
 export default {
 	name: 'TabContent',
 	components: { effectPulseCircle },
 	data: function () {
 		return {
-			tabs: [
-				{id:4,data:'Home'},
-				{id:1,data:'Devices'},
-				{id:2,data:'Commands'},
-				{id:3,data:'Options'},
-				{id:5,data:'Stats'}
-			],
-			activeTab: 3,
-			active_tab_width: 64
+			tabs: [],
+			additionTabs: [],
+			activeTab: 0,
+			active_tab_width: 64,
+			curComponent: null,
 		}
 	},
 	props: {
-		id:         { default:'', type:String },
-		background: { default:'#09090b', type:String }
+		id:        		{ default:'', type:String },
+		background:		{ default:'#09090b', type:String },
+		header_height:	{ default:'12px', type:String },
+		childs:			{ default:[], type:[] },
+		additionChilds:		{ default:[], type:[] },
 	},
 	computed: {
-
+		VButton()	{ return VButton; },
+		console()	{ return console; },
+		component() { return this.curComponent; }
 	},
 	methods: {
 		updated() {
 			console.log('WWWWWWWWWWWWWWW')
 		},
-		mounted() {
-      		console.log('UPDATED!!!!')
-		},
-		onTabClick(tab) {
-			this.activeTab=tab.id;
+
+		onTabClick(index) {
+			this.curComponent=this.childs[index];
+			this.activeTab=index;
 		}
-	}
+	},
+	mounted() {
+		for(const child of this.childs) {
+			this.tabs.push(child.name);
+		}
+		for(const child of this.additionChilds) {
+			this.additionTabs.push(child.name);
+		}
+		this.onTabClick(this.activeTab);
+	},
 }
 </script>
 
@@ -108,7 +122,10 @@ export default {
 		.header-wrapper {
 			display: flex;
 			&_tab {
+				max-width: 128px;
 				display: flex;
+				text-overflow: ellipsis;
+				overflow: hidden;
 				.additive {
 					position: relative;
 					white-space: nowrap;
@@ -118,14 +135,14 @@ export default {
 					pointer-events: all;
 					.tab_content {
 						background: #111111;
+						text-overflow: ellipsis;
+						overflow: hidden;
 					}
 				}
 				.subtractive {
 					position: relative;
 					color: #d4cfd5;
 					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
 					cursor: pointer;
 					svg {
 
@@ -157,7 +174,8 @@ export default {
 	}
 	&_body {
 		position: relative;
-		min-height: 120px;
+		min-height: 320px;
+		padding: 44px 12px 12px 12px;
 		height: 0;
 		background: #181818;
 		background: linear-gradient(120deg, #181818 0%, #1c1b21 100%);

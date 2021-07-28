@@ -22,18 +22,21 @@
         </div>
       </div>
       <div class="separator-line" />
-      <TabContent />
+	  <TabContent :childs="[Green,Red,Def]" :additionChilds="[VButton,Red]"/>
     </div>
   </section>
 </template>
 
 <script lang="ts">
 import Vue			from 'vue'
-import VButton		from '@/components/input/button'
-import TabContent	from '@/components/containers/tab-content'
+import VButton		from '@/components/input/button.vue'
+import TabContent	from '@/components/containers/tab-content.vue'
+import Green		from '@/layouts/green.vue'
+import Red			from '@/layouts/red.vue'
+import Def			from '@/layouts/default.vue'
 
 export default Vue.extend({
-	components: { TabContent, VButton },
+	components: { TabContent, VButton, Green, Red, Def },
 	data () {
 		return {
 			ws: {} as WebSocket,
@@ -43,10 +46,13 @@ export default Vue.extend({
 		}
 	},
 	computed: {
-
+		Green()		{ return Green;	},
+		VButton()	{ return VButton;	},
+		Red()		{ return Red;	},
+		Def()		{ return Def;	}
 	},
 	mounted () {
-		// обработчик проинформирует в консоль ког да соединение установится
+
 	},
 	methods: {
 		wsToggle () {
@@ -117,6 +123,7 @@ export default Vue.extend({
 			.websocket {
 				min-height: 100px;
 				display: flex;
+				padding: 12px;
 				background: rgb(17,17,17);
 				background: linear-gradient(120deg, rgba(17,17,17,1) 0%, rgba(27,27,29,1) 100%);
 			}
