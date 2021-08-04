@@ -22,21 +22,24 @@
         </div>
       </div>
       <div class="separator-line" />
-	  <TabContent :childs="[Green,Red,Def]" :additionChilds="[VButton,Red]"/>
+	  <TabContent :childs="[[Home,Green,Red,Blue],[VButton,Red],[VButton,Red]]"/>
+	  <TabContent :childs="[[Home,Green,Red,Blue]]"/>
+	  <TabContent :childs="[Home,Green,Red,Blue]"/>
     </div>
   </section>
 </template>
 
 <script lang="ts">
 import Vue			from 'vue'
-import VButton		from '@/components/input/button.vue'
-import TabContent	from '@/components/containers/tab-content.vue'
-import Green		from '@/layouts/green.vue'
-import Red			from '@/layouts/red.vue'
-import Def			from '@/layouts/default.vue'
+import VButton		from '~/components/input/button.vue'
+import TabContent	from '~/components/containers/tab-content/v-tab-content.vue'
+import Green		from '~/layouts/green.vue'
+import Red			from '~/layouts/red.vue'
+import Blue			from '~/layouts/blue.vue'
+import Home			from '~/layouts/home.vue'
 
 export default Vue.extend({
-	components: { TabContent, VButton, Green, Red, Def },
+	components: { TabContent, VButton, Home, Green, Red, Blue },
 	data () {
 		return {
 			ws: {} as WebSocket,
@@ -49,7 +52,8 @@ export default Vue.extend({
 		Green()		{ return Green;	},
 		VButton()	{ return VButton;	},
 		Red()		{ return Red;	},
-		Def()		{ return Def;	}
+		Blue()		{ return Blue;	},
+		Home()		{ return Home;	}
 	},
 	mounted () {
 

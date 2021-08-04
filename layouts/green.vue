@@ -24,7 +24,7 @@
 
 <script>
 export default {
-	name: "green dsds"
+	name: "Green"
 }
 </script>
 
